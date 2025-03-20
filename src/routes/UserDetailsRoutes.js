@@ -5,7 +5,7 @@ const userDetailsController = require("../controllers/UserDetailsControllers")
 routes.get("/user-details/:id", userDetailsController.getUserDetailsById)
 
 // Create a new user details
-routes.post("/user-details", userDetailsController.createUserDetails)
+routes.post("/adddetails", userDetailsController.createUserDetails)
 
 // Get all user details
 routes.get("/user-details", userDetailsController.getAllUserDetails)

@@ -40,7 +40,7 @@ const userDetailsSchema = new Schema({
    },
    city_id:{
      type: Schema.Types.ObjectId,
-     ref: "cities"
+     ref: "city"
    },
    state_id:{
      type: Schema.Types.ObjectId,
@@ -48,7 +48,7 @@ const userDetailsSchema = new Schema({
    },
    country_id:{
      type: Schema.Types.ObjectId,
-     ref: "countries"
+     ref: "country"
    },
    pincode:{
      type: String,

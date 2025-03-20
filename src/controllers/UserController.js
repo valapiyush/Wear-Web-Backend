@@ -20,7 +20,6 @@ const loginUser = async (req, res)=>{
             return res.status(401).json({ success: false, message: 'Invalid role' });
         }
 
-        console.log(foundUserFromusername);
         res.status(200).json({
             success: true,
             data: foundUserFromusername
@@ -68,7 +67,6 @@ const signup = async(req, res)=>{
             </div>
         `;
         await mailUtil.sendingMail(savedUser.email, "Welcome to WearWeb", emailContent);
-        console.log(savedUser)
         res.status(201).json({
             success: true,
             data: savedUser
