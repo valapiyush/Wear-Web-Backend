@@ -21,7 +21,6 @@ const getAllUserDetails = async (req, res) => {
 const getUserDetailsById = async (req, res) => {
     try {
         const userDetails = await userDetailsModel.findOne( {user_id:req.params.id}).populate("user_id").populate("city_id").populate("state_id").populate("country_id")
-        console.log(userDetails)
         res.status(200).json({
             success: true,
             message: "User details fetched successfully",
