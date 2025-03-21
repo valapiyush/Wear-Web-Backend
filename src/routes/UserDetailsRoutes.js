@@ -10,4 +10,8 @@ routes.post("/adddetails", userDetailsController.createUserDetails)
 // Get all user details
 routes.get("/user-details", userDetailsController.getAllUserDetails)
 
+// Update user details by ID
+
+routes.put("/update/:id", userDetailsController.updateUserDetailsByUserId)
+
 module.exports = routes

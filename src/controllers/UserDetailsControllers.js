@@ -53,8 +53,24 @@ const createUserDetails = async (req, res) => {
     }
 }
 
+const updateUserDetailsByUserId = async(req, res)=>{
+    try{
+        const userDetails = await userDetailsModel.findOneAndUpdate({user_id: req.params.id}, req.body, {new: true}).populate("user_id").populate("city_id").populate("state_id").populate("country_id")
+        res.status(200).json({
+            success: true,
+            message: "User details updated successfully",
+            data: userDetails
+        })
+    }catch(err){
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
 module.exports = {
     getAllUserDetails,
     getUserDetailsById,
-    createUserDetails
+    createUserDetails,
+    updateUserDetailsByUserId
 }
