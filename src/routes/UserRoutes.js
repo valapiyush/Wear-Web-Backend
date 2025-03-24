@@ -7,7 +7,9 @@ routes.get("/users",UserController.getAllUsers);
 routes.delete("/users/:id",UserController.deleteUserByID);
 routes.get("/users/:id",UserController.getUserById);
 routes.put("/users/:id",UserController.updateUserById);
-routes.post("/usersignup",UserController.signup);
+routes.post("/users/signup",UserController.signup);
 routes.post("/users/login",UserController.loginUser)
+routes.post("/users/forgotpassword",UserController.forgotpassword)
+routes.post("/users/resetpassword/:token",UserController.resetPassword)
 
 module.exports = routes
