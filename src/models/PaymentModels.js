@@ -1,29 +1,38 @@
 const mongoose = require("mongoose");
+
 const PaymentSchema = new mongoose.Schema({
-  order_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "order",
-    required: true,
-  },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    ref: "User",
     required: true,
   },
-  amount: { type: Number, required: true },
+  order_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Order",
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
   payment_method: {
     type: String,
-    enum: ["credit_card", "debit_card", "UPI", "PayPal", "COD"],
+    enum: ["COD", "Stripe", "Razorpay", "PayPal"],
     required: true,
   },
-  transaction_id: { type: String, unique: true },
-  status: {
+  payment_status: {
     type: String,
-    enum: ["pending", "completed", "failed", "refunded"],
-    default: "pending",
+    enum: ["Pending", "Completed", "Failed", "Refunded"],
+    default: "Pending",
   },
-},{
-    timestamps: true 
+  transaction_id: {
+    type: String, // For Stripe/Razorpay reference
+    default: null,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model("Payment", PaymentSchema);
+module.exports = mongoose.model("payment", PaymentSchema);

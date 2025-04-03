@@ -158,14 +158,93 @@ const forgotpassword = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    const token = jwt.sign({ id: user._id },SECRET_KEY, {
+    const token = jwt.sign({ id: user._id }, SECRET_KEY, {
       expiresIn: "1h",
     });
     const link = `http://localhost:5173/resetpassword/${token}`;
     await mailUtil.sendingMail(
       user.email,
-      "Reset Password",
-      `<a href="${link}">Reset Password</a>`
+      "Reset Your Password - Wear Web",
+      `
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Reset Your Password</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 600px;
+                    background-color: #ffffff;
+                    margin: 50px auto;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                }
+                .header {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #4b748b;
+                    margin-bottom: 20px;
+                }
+                .content {
+                    font-size: 16px;
+                    color: #333;
+                    line-height: 1.6;
+                    margin-bottom: 30px;
+                }
+                .btn {
+                    background-color: #4b748b;
+                    color: white;
+                    padding: 12px 20px;
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border-radius: 5px;
+                    display: inline-block;
+                }
+                .btn:hover {
+                    background-color: #2f536c;
+                }
+                .footer {
+                    font-size: 14px;
+                    color: #777;
+                    margin-top: 30px;
+                }
+            </style>
+        </head>
+        <body>
+
+        <div class="container">
+            <div class="header">Reset Your Password</div>
+            
+            <div class="content">
+                Hi <strong>${user.username}</strong>,  
+                <br><br>
+                We received a request to reset your password. Click the button below to set a new password:
+                <br><br>
+                <a href="${link}" class="btn">Reset Password</a>
+                <br><br>
+                If you didn&apos;t request this, please ignore this email. Your password will remain unchanged.
+            </div>
+
+            <div class="footer">
+                Need help? Contact our support team at  
+                <a href="mailto:support@wearweb.com">support@wearweb.com</a>  
+                <br><br>
+                &copy; 2025 Wear Web. All rights reserved.
+            </div>
+        </div>
+
+        </body>
+        </html>
+      `
     );
     res.status(200).json({ success: true, message: "Email sent successfully" });
   } catch (error) {
@@ -179,13 +258,13 @@ const resetPassword = async (req, res) => {
     const { password } = req.body;
     const verified = jwt.verify(token, SECRET_KEY);
     if (!verified) {
-        return res.status(403).json({ success: false, message: "Token expired" });
+      return res.status(403).json({ success: false, message: "Token expired" });
     }
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
     const user = await UserModel.findByIdAndUpdate(verified.id, { password: hashedPassword }, { new: true });
     res.status(200).json({ success: true, message: "Password reset successfully" });
-    } catch (error) {
+  } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };

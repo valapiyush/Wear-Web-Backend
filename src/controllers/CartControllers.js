@@ -2,7 +2,7 @@ const cartModel = require("../models/CartModels");
 
 const getCartDetailsByUserId = async (req, res)=>{
     try{
-        const cartDetails = await cartModel.find({user_id: req.params.id}).populate("user_id");
+        const cartDetails = await cartModel.find({user_id: req.params.id}).populate("user_id").populate("product_id");
         res.status(200).json({
             success: true, 
             data: cartDetails
@@ -16,7 +16,7 @@ const getCartDetailsByUserId = async (req, res)=>{
 }
 const getCartDetailsById = async(req, res) =>{
     try{
-        const cartDetails = await cartModel.findById(req.params.id)
+        const cartDetails = await cartModel.findById(req.params.id).populate("product_id");
         if(!cartDetails){
             return res.status(404).json({
                 success: false,
@@ -71,9 +71,31 @@ const updateCartItem = async (req, res) => {
         });
     }
 }
+
+const deleteCartItem = async (req, res) => {
+    try{
+        const deletedCart = await cartModel.findByIdAndDelete(req.params.id)
+        if(!deletedCart){
+            return res.status(404).json({
+                success: false,
+                message: "Cart not found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: "Cart deleted successfully"
+        });
+    }catch(err){
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+    }
+}
 module.exports = {
     getCartDetailsByUserId,
     getCartDetailsById,
     addToCart,
-    updateCartItem
+    updateCartItem,
+    deleteCartItem
 }

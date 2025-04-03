@@ -2,7 +2,7 @@ const routes = require("express").Router()
 const categoriesController = require("../controllers/CategoriesController")
 
 // Get all categories
-routes.get("/", categoriesController.getAllCategories)
+routes.get("/get", categoriesController.getAllCategories)
 
 // Get a single category by ID
 routes.get("/:id", categoriesController.getCategoryById)

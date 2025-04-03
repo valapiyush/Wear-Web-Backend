@@ -13,5 +13,5 @@ routes.delete("/products/:id", productsController.deleteProduct)
 
 routes.post("/addproduct", productsController.addProductsWithFiles)
 
-routes.get("/getproductbyuserid/:user_id", productsController.getProductsByUserId)
+routes.get("/user/:id", productsController.getProductsByUserId)
 module.exports = routes

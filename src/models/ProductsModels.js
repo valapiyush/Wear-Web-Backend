@@ -32,9 +32,11 @@ const productsSchema = new Schema({
     },
     offer_price:{
         type: Number,
+        required: false
     },
     offer_percentage:{
         type: Number,
+        required: false
     },
     
     quantity:{
@@ -43,7 +45,7 @@ const productsSchema = new Schema({
     },
     product_image_urls:[{
         type: Array,
-        // required: true
+        required: true
     }],
     
 },{

@@ -22,7 +22,7 @@ const getAllProducts = async (req, res) => {
     const allProducts = await productsModel
       .find()
       .populate("category_id")
-      .populate("subcategory_id");
+      .populate("sub_category_id");
     res.status(200).json({
       success: true,
       data: allProducts,
