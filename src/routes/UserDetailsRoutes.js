@@ -12,6 +12,6 @@ routes.get("/user-details", userDetailsController.getAllUserDetails)
 
 // Update user details by ID
 
-routes.put("/update/:id", userDetailsController.updateUserDetailsByUserId)
+routes.put("/update/:user_id", userDetailsController.updateUserDetailsByUserId)
 
 module.exports = routes

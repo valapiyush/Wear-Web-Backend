@@ -18,4 +18,5 @@ routes.put("/update/:id", categoriesController.updateCategory)
 // Delete a category by ID
 routes.delete("/delete/:id", categoriesController.deleteCategory)
 
+
 module.exports = routes

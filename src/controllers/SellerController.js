@@ -1,4 +1,6 @@
 const sellerModel = require("../models/SellerModel");
+const orderModel = require('../models/OrderModels'); 
+const productModel = require('../models/ProductsModels'); 
 const getAllSellers = async (req, res) => {
   try {
     const sellers = await sellerModel.find().populate("user_id");
@@ -82,6 +84,45 @@ const updateSellerById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+const getBestSellers = async (req, res) => {
+  try {
+    const bestSellers = await orderModel.aggregate([
+      { $unwind: "$items" }, 
+      {
+        $group: {
+          _id: "$items.productId",
+          totalSales: { $sum: "$items.quantity" }
+        }
+      },
+      { $sort: { totalSales: -1 } },
+      { $limit: 5 },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      { $unwind: "$product" },
+      {
+        $project: {
+          _id: "$product._id",
+          title: "$product.name",
+          price: "$product.price",
+          salePrice: "$product.sale_price",
+          image: "$product.image",
+          totalSales: 1
+        }
+      }
+    ]);
+
+    res.status(200).json({ success: true, data: bestSellers });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 
 module.exports = {
   getAllSellers,
@@ -90,4 +131,5 @@ module.exports = {
   deleteSellerByID,
   getSellerById,
   updateSellerById,
+  getBestSellers
 };

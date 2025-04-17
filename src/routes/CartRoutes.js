@@ -9,4 +9,6 @@ routes.put("/update/:id", cartController.updateCartItem)
 routes.get("/user/:id", cartController.getCartDetailsByUserId)
 
 routes.delete("/remove/:id", cartController.deleteCartItem)
+
+routes.delete("/delete/:id", cartController.deleteCartItemsByUserId)
 module.exports = routes

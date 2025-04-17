@@ -79,11 +79,12 @@ const deleteCategory = async (req, res) => {
 }
 
 
+
 module.exports = { 
     getAllCategories, 
     getCategoryById,
     getCategoryByUserId,  
     createCategory,
     updateCategory,
-    deleteCategory    
+    deleteCategory
 }

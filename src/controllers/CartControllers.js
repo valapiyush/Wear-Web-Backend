@@ -92,10 +92,32 @@ const deleteCartItem = async (req, res) => {
         });
     }
 }
+
+const deleteCartItemsByUserId = async (req, res) => {
+    try{
+        const deletedCart = await cartModel.deleteMany({user_id: req.params.id})
+        if(!deletedCart){
+            return res.status(404).json({
+                success: false,
+                message: "Cart not found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: "Cart deleted successfully"
+        });
+    }catch(err){
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+        }
+}
 module.exports = {
     getCartDetailsByUserId,
     getCartDetailsById,
     addToCart,
     updateCartItem,
-    deleteCartItem
+    deleteCartItem,
+    deleteCartItemsByUserId
 }

@@ -73,6 +73,9 @@ app.use("/refund",refundAndReturnRoutes)
 
 const addressRoutes = require("./src/routes/AddressRoutes")
 app.use("/address",addressRoutes)
+
+const adminRoutes = require("./src/controllers/AdminController")
+app.use('/admin', adminRoutes);
 mongoose.connect("mongodb://localhost:27017/25_node_internship").then(()=>{
     console.log("Database is connected")
 })

@@ -3,11 +3,6 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
   {
-    order_id: {
-      type: String,
-      unique: true, // Unique order identifier
-      required: true,
-    },
     user_id: {
       type: Schema.Types.ObjectId,
       ref: "users",
@@ -17,7 +12,7 @@ const orderSchema = new Schema(
       {
         product_id: {
           type: Schema.Types.ObjectId,
-          ref: "Product",
+          ref: "products",
           required: true,
         },
         quantity: {
@@ -29,10 +24,7 @@ const orderSchema = new Schema(
           type: Number,
           required: true,
         },
-        total_price: {
-          type: Number,
-          required: true,
-        },
+        
       },
     ],
     total_amount: {
@@ -54,14 +46,11 @@ const orderSchema = new Schema(
       default: "COD",
       enum: ["Credit Card", "PayPal", "UPI", "COD"],
     },
-    shipping_address: {
-      name: { type: String, required: true },
-      phone: { type: String, required: true },
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      state: { type: String, required: true },
-      country: { type: String, required: true },
-      zip_code: { type: String, required: true },
+    shipping_address_id: {
+      type: Schema.Types.ObjectId,
+      ref: "userdetails",
+      required: true
+     
     },
   },
   {

@@ -2,6 +2,7 @@ const routes = require("express").Router()
 const sellerController = require("../controllers/SellerController")
 
 routes.get("/sellers", sellerController.getAllSellers)
+routes.get("/best-sellers", sellerController.getBestSellers)
 routes.get("/sellers/:id/products", sellerController.getSellerProductsById)
 routes.post("/sellers", sellerController.addSeller)
 routes.delete("/sellers/:id", sellerController.deleteSellerByID)

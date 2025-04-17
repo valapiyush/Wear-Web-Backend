@@ -128,7 +128,7 @@ const deleteProduct = async (req, res) => {
 };
 const getProductsByUserId = async(req, res)=>{
   try{
-    const products = await productsModel.find({user_id: req.params.id});
+    const products = await productsModel.find({user_id: req.params.id}).populate("category_id").populate("sub_category_id");
     res.status(200).json({
       success: true,
       data: products,
@@ -140,6 +140,52 @@ const getProductsByUserId = async(req, res)=>{
     });
   }
 }
+
+const getMensCategory = async(req, res)=>{
+  try{
+    const products = await productsModel.find({category_id: new mongoose.Types.ObjectId("67c11cd931aacdf7de0b6601")});
+    console.log(products)
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  }catch(err){
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+}
+const getWomensCategory = async(req, res)=>{
+  try{
+    const products = await productsModel.find({category_id: new mongoose.Types.ObjectId("67c11cf631aacdf7de0b6603")});
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  }catch(err){
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+}
+
+const getKidsCategory = async(req, res)=>{
+  try{
+    const products = await productsModel.find({category_id: new mongoose.Types.ObjectId("67c11d0231aacdf7de0b6605")});
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  }catch(err){
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+}
+
 module.exports = {
   getAllProducts,
   getProductById,
@@ -148,4 +194,7 @@ module.exports = {
   deleteProduct,
   addProductsWithFiles,
   getProductsByUserId,
+  getMensCategory,
+  getWomensCategory,
+  getKidsCategory
 };

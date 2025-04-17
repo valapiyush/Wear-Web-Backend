@@ -1,7 +1,7 @@
 const Wishlist = require("../models/WishlistModels");
 const mongoose = require("mongoose");
 
-// ✅ Add to Wishlist
+//  Add to Wishlist
 exports.addToWishlist = async (req, res) => {
   try {
     const { user_id, product_id } = req.body;
@@ -26,7 +26,7 @@ exports.addToWishlist = async (req, res) => {
   }
 };
 
-// ✅ Get Wishlist by User ID
+//Get Wishlist by User ID
 exports.getWishlistByUserId = async (req, res) => {
   try {
     const user_id = req.params.user_id;
@@ -41,17 +41,17 @@ exports.getWishlistByUserId = async (req, res) => {
   }
 };
 
-// ✅ Remove from Wishlist
+// Remove from Wishlist
 exports.removeFromWishlist = async (req, res) => {
   try {
-    const { user_id } = req.body;
-    const { product_id } = req.params;
-
+    const {user_id} = req.params;
+    const {product_id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(user_id) || !mongoose.Types.ObjectId.isValid(product_id)) {
       return res.status(400).json({ message: "Invalid ID format." });
     }
 
     const result = await Wishlist.findOneAndDelete({ user_id, product_id });
+    
     if (!result) {
       return res.status(404).json({ message: "Item not found in wishlist" });
     }
